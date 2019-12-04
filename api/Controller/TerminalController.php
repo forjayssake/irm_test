@@ -5,13 +5,9 @@ namespace Api\Controller;
 use Exception;
 use Api\Services\ProductsService;
 
-class BasketController
+class TerminalController
 {
 
-    /**
-     * @var float
-     */
-    private $total;
     private $basket = [];
 
 
@@ -25,19 +21,56 @@ class BasketController
                 throw new Exception('Product code: ' .  $item. ' not found');
             }
 
+            $this->scanItem($iten);
+        }
 
+        return json_encode(['total' => $this->calculateTotal()]);
+    }
 
+    private function scanItem(string $item): void
+    {
+        if (empty($this->basket[$item])) {
+            $this->basket[$item] = 1;
+        } else {
+            $this->basket[$item]++;
         }
     }
 
-    private function scanItem(string $item)
+    private function calculateTotal(): float
     {
+        $total  = 0;
 
+        foreach($this->basket as $code => $quantity) {
+            if(ProductsService::hasBulkPrice($code)) {
+                $total += $this->calculateBulkPrice($code, $quantity);
+            } else {
+                $total += $this->calculateSinglePrice($code, $quantity);
+            }
+        }
+
+        return $total;
     }
 
-    private function calculateTotal()
+    private function calculateSinglePrice($code, $quantity)
     {
+        $price = ProductsService::getPrice($code);
+        return ($price * $quantity);
+    }
 
+    private function calculateBulkPrice(string $code, int $quantity): float
+    {
+        [$bulkQuantity, $bulkValue] = ProductsService::getBulkPriceDetails($code);
+
+        $bulkPrice = 0;
+        if ($quantity >= $bulkQuantity) {
+            $bulkItems = floor($quantity/$bulkQuantity);
+            $bulkPrice = $bulkItems*$bulkValue;
+        }
+
+        $remaining = $quantity%$bulkQuantity;
+        $singlePrice = $this->calculateSinglePrice($code, $remaining);
+
+        return $bulkPrice+$singlePrice;
     }
 
 }

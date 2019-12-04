@@ -1,10 +1,10 @@
 <?php
 
-namespace Api\Controller;
+namespace Api\Services;
 
 use phpDocumentor\Reflection\Types\Float_;
 
-class ProductController
+class ProductsService
 {
     /**
      * @var array Code | Price
@@ -36,13 +36,18 @@ class ProductController
         return !empty(self::$products[$code]);
     }
 
-    public static function getPrics(string $code): float
+    public static function getPrice(string $code): float
     {
-
+        return self::$products[$code];
     }
 
     public static function hasBulkPrice(string $code): bool
     {
         return !empty(self::$bulkProducts[$code]);
+    }
+
+    public function getBulkPriceDetails(string $code): array
+    {
+        return self::$bulkProducts[$code];
     }
 }
