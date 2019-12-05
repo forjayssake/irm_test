@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Controller;
+namespace Api\Controllers;
 
 use Exception;
 use Api\Services\ProductsService;
@@ -10,12 +10,11 @@ class TerminalController
 
     private $basket = [];
 
-
-    public function scanItems(array $items)
+    public function scanItems(array $items): array
     {
         $this->total = 0;
 
-        foreach($items as $item) {
+        foreach($items['items'] as $item) {
 
             if (!ProductsService::productExists($item)) {
                 throw new Exception('Product code: ' .  $item. ' not found');
@@ -24,7 +23,7 @@ class TerminalController
             $this->scanItem($item);
         }
 
-        return json_encode(['total' => $this->calculateTotal()]);
+        return ['total' => $this->calculateTotal()];
     }
 
     private function scanItem(string $item): void
@@ -59,9 +58,6 @@ class TerminalController
 
     private function calculateBulkPrice(string $code, int $quantity): float
     {
-        $bulkQuantity = 0;
-        $bulkValue = 0;
-
         [$bulkQuantity, $bulkValue] = ProductsService::getBulkPriceDetails($code);
 
         $bulkPrice = 0;

@@ -1,8 +1,3 @@
 <?php
-
-$router->post(
-    [
-        'Terminal',
-        'scanItems'
-    ]
-);
+/** @var \Api\Router */
+$router->post('scan-items', 'TerminalController@scanItems');

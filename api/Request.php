@@ -47,14 +47,14 @@ class Request
         return $this->method;
     }
 
-    private function getController(): string
+    public function getController(): string
     {
         return $this->controller;
     }
 
-    private function getBody(): ?array
+    public function getBody(): ?array
     {
-        return $this->body;
+        return json_decode($this->body, true);
     }
 
     private function setRequestParameters()
@@ -67,6 +67,7 @@ class Request
 
         if (self::TYPE_POST === $this->type) {
             $this->body = file_get_contents('php://input');
+
             if (empty($this->body)) {
                 throw new RequestInvalidException('POST body is empty');
             }
