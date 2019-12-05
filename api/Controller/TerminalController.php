@@ -21,7 +21,7 @@ class TerminalController
                 throw new Exception('Product code: ' .  $item. ' not found');
             }
 
-            $this->scanItem($iten);
+            $this->scanItem($item);
         }
 
         return json_encode(['total' => $this->calculateTotal()]);
@@ -59,6 +59,9 @@ class TerminalController
 
     private function calculateBulkPrice(string $code, int $quantity): float
     {
+        $bulkQuantity = 0;
+        $bulkValue = 0;
+
         [$bulkQuantity, $bulkValue] = ProductsService::getBulkPriceDetails($code);
 
         $bulkPrice = 0;
