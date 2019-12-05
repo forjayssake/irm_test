@@ -23,10 +23,10 @@ class ProductsService
 
     private static $bulkProducts = [
         'ZA' => [
-            6 => 6.00
+            6, 6.00
         ],
         'FC' => [
-            4 => 7.00
+            4, 7.00
         ],
     ];
 

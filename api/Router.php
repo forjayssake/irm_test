@@ -22,17 +22,14 @@ class Router
         return $this->routes[$type][$target];
     }
 
-    public function dispatch(Request $request): string
+    public function dispatch(Request $request): array
     {
         $type = strtolower($request->getType());
         $target = $request->getMethod();
 
         $route = $this->getRoute($type, $target);
-        $response = [];
-
         $controllerClass = '\\Api\\Controllers\\' . $route['controller'];
         $action = $route['action'];
-
         $controller = new $controllerClass();
 
         return $controller->$action($request->getBody());
