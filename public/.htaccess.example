@@ -4,11 +4,8 @@
     </IfModule>
 
     # htaccess rewrites
+    Options +FollowSymLinks
     RewriteEngine On
-
-    #apache fix to allow bearer tokens to come through without base64 encoded user/pass
-    RewriteCond %{HTTP:Authorization} ^(.*)
-    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 
     # Handle API Controller...
     RewriteCond %{REQUEST_FILENAME} !-d

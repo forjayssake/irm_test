@@ -1,22 +1,25 @@
 <?php
 
-use \Api\Router;
-use \Api\Request;
+use Api\Exception\RequestInvalidException;
+use Api\Request;
+use Api\Router;
 
 include __DIR__ . '/../vendor/autoload.php';
 
+// set up the available routes
 $router = new Router();
-require __DIR__ . '/../api/config/routes.php';
+include __DIR__ . '/../api/config/routes.php';
 
-$request = new Request($_SERVER);
+try {
+    $request = new Request($_SERVER);
 
-$response = [];
-if ($router->hasRoute($request)) {
-    // call the allowed controller method
+    if ($router->hasRoute($request)) {
 
-} else {
-    // route not found error
-
+    } else {
+        $response = ['error' => 'not found'];
+    }
+} catch (RequestInvalidException $e) {
+    $response = ['error' => 'An exception occurred'];
 }
 
-echo $response;
+echo json_encode($response);

@@ -20,7 +20,7 @@ class Router
     /**
      * create a new post route
      */
-    private function post(): void
+    public function post(array $route): void
     {
 
     }
