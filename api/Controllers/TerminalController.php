@@ -23,7 +23,7 @@ class TerminalController
         foreach($items['items'] as $item) {
 
             if (!ProductsService::productExists($item)) {
-                throw new Exception('Product code: ' .  $item. ' not found');
+                throw new RequestInvalidException('Product code: ' .  $item. ' not found');
             }
 
             $this->scanItem($item);

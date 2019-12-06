@@ -28,7 +28,6 @@ class ProductsService
         ],
     ];
 
-
     public static function productExists(string $code): bool
     {
         return !empty(self::$products[$code]);

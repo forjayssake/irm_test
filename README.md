@@ -22,7 +22,7 @@ Assuming your host is `localhost` a POST request can be made to:
 
 http://localhost/terminal/scan-items
 
-The scan-items endpoint expects an array product codes:
+The scan-items endpoint expects an array of product codes:
 
 ```json
 {
@@ -31,7 +31,7 @@ The scan-items endpoint expects an array product codes:
 		]
 }
 ```
- and will return a JSON reponose containing the total values for the products, e.g.:
+ and will return a JSON response containing the total values for the products, e.g.:
  ```json
 {"total":32.4}
 ``` 

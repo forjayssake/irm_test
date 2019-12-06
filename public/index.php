@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-
 use Api\Exception\RequestInvalidException;
 use Api\Request;
 use Api\Router;
@@ -15,8 +13,7 @@ try {
     $request = new Request($_SERVER);
     $response = $router->dispatch($request);
 } catch (RequestInvalidException $e) {
-    var_dump($e->getMessage());
-    $response = ['error' => 'An exception occurred'];
+    $response = ['error' => $e->getMessage()];
 }
 
 echo json_encode($response);
