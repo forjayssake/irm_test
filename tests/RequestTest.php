@@ -6,21 +6,24 @@ use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase
 {
-    /** @var Request */
-    private $request;
-
-    public function setUp()
-    {
-        $this->request = new Request();
-    }
-
     public function testInvalidMethodThrowsException()
     {
+        $details = [
+            'REQUEST_METHOD' => 'BAD_TYPE'
+        ];
 
+        $this->expectException(RequestInvalidException::class);
+        $request = new Request($details);
     }
 
     public function testPostRequestWithNoBodyThrowsException()
     {
+        $details = [
+            'REQUEST_METHOD' => 'POST',
+            'REQUEST_URI' => '/'
+        ];
 
+        $this->expectException(RequestInvalidException::class);
+        $request = new Request($details);
     }
 }

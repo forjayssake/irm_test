@@ -15,7 +15,7 @@ class TerminalController
 
     public function scanItems(array $items): array
     {
-        if (empty($items['items'])) {
+        if (!isset($items['items'])) {
             throw new RequestInvalidException('No items found. Expected format {"items":[...]}');
         }
 

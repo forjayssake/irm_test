@@ -15,24 +15,14 @@ class RouterTest extends TestCase
         $this->router = new Router();
     }
 
-    public function testInvalidRouteTypeThrowsException()
+    public function tearDown()
     {
-
-    }
-
-    public function testEmptyTargetThrowsException()
-    {
-
+        unset($this->router);
     }
 
     public function testInvalidActionOrControllerThrowsException()
     {
-
+        $this->expectException(RequestInvalidException::class);
+        $this->router->post('unknown-route', 'UnknownController@scanItems');
     }
-
-    public function testValidRequestReturnsRoute()
-    {
-
-    }
-
 }

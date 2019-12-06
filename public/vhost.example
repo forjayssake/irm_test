@@ -1,0 +1,23 @@
+<VirtualHost *:80>
+    ServerName irmtest.local
+    ServerAlias irmtest.local
+    ServerAdmin webmaster@localhost
+    DocumentRoot /{LOCAL_PATH}/irm_test/public
+
+   <Directory /{LOCAL_PATH}/irm_test/public>
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+        Require all granted
+
+        RewriteEngine On
+
+        RewriteRule ^/index\.php$ - [L,NC]
+
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule . index.php [L]
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/irm_test-error.log
+    CustomLog ${APACHE_LOG_DIR}/irm_test-access.log combined
+</VirtualHost>

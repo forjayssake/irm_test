@@ -3,6 +3,7 @@
 namespace Api;
 
 use Api\Exception\RequestInvalidException;
+use Api\Controllers\TerminalController;
 
 class Router
 {
@@ -28,7 +29,8 @@ class Router
         $target = $request->getMethod();
 
         $route = $this->getRoute($type, $target);
-        $controllerClass = '\\Api\\Controllers\\' . $route['controller'];
+
+        $controllerClass = $route['controller'];
         $action = $route['action'];
         $controller = new $controllerClass();
 
@@ -43,7 +45,8 @@ class Router
     {
         [$controller, $action] = explode('@', $target);
 
-        if (!is_callable($controller, $action)) {
+        $controller = '\\Api\\Controllers\\' . $controller;
+        if (!method_exists($controller, $action)) {
             throw new RequestInvalidException('Route with target: ' . $target . ', is invalid');
         }
 
