@@ -2,8 +2,6 @@
 
 namespace Api\Services;
 
-use phpDocumentor\Reflection\Types\Float_;
-
 class ProductsService
 {
     /**
