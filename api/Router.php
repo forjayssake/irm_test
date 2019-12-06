@@ -7,7 +7,7 @@ use Api\Exception\RequestInvalidException;
 class Router
 {
     private $routes = [
-        'post' => []
+        'POST' => []
     ];
 
     /**
@@ -15,7 +15,7 @@ class Router
      */
     private function getRoute(string $type, string $target): array
     {
-        if (empty($this->routes[$type][$target])) {
+        if (!in_array($type, Request::$allowedMethods) || empty($this->routes[$type][$target])) {
             throw new RequestInvalidException('Route with target: ' . $target . ', is invalid');
         }
 
@@ -24,7 +24,7 @@ class Router
 
     public function dispatch(Request $request): array
     {
-        $type = strtolower($request->getType());
+        $type = $request->getType();
         $target = $request->getMethod();
 
         $route = $this->getRoute($type, $target);

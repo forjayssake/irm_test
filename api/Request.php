@@ -8,7 +8,7 @@ class Request
 {
     private const TYPE_POST = 'POST';
 
-    private $allowMethods = [
+    public static $allowedMethods = [
         self::TYPE_POST,
     ];
 
@@ -76,7 +76,7 @@ class Request
 
     private function allowedMethod(): bool
     {
-        return in_array($this->request['REQUEST_METHOD'], $this->allowMethods);
+        return in_array($this->request['REQUEST_METHOD'], self::$allowedMethods);
     }
 
 }
