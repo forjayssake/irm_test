@@ -1,6 +1,7 @@
 <?php
 
 use Api\Controllers\TerminalController;
+use Api\Exception\RequestInvalidException;
 use PHPUnit\Framework\TestCase;
 
 class TerminalControllerTest extends TestCase
@@ -42,5 +43,16 @@ class TerminalControllerTest extends TestCase
         }
     }
 
+    public function testMalformedItemsListThrowsException()
+    {
+        $this->expectException(RequestInvalidException::class);
+        $result = $this->terminal->scanItems([]);
+    }
 
+    public function testEmptyItemsListReturnsZeroTotal()
+    {
+        $result = $this->terminal->scanItems(['items' => []]);
+        $this->assertTrue(is_array($result));
+        $this->assertEquals($result['total'], 0);
+    }
 }

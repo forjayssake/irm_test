@@ -32,6 +32,10 @@ class TerminalController
         return ['total' => $this->calculateTotal()];
     }
 
+    /**
+     * add an item to the basket
+     * increment the total if a product is already in the basket
+     */
     private function scanItem(string $item): void
     {
         if (empty($this->basket[$item])) {
