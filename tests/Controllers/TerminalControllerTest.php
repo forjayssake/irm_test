@@ -12,15 +12,15 @@ class TerminalControllerTest extends TestCase
     private $baskets = [
         0 => [
             'expected' => 32.40,
-            'products' => ['ZA','YB','FC','GD','ZA','YB','ZA','ZA']
+            'products' => ['items' => ['ZA','YB','FC','GD','ZA','YB','ZA','ZA']]
         ],
         1 => [
             'expected' => 7.25,
-            'products' => ['FC','FC','FC','FC','FC','FC','FC']
+            'products' => ['items' => ['FC','FC','FC','FC','FC','FC','FC']]
         ],
         2 => [
             'expected' => 15.40,
-            'products' => ['ZA','YB','FC','GD']
+            'products' => ['items' => ['ZA','YB','FC','GD']]
         ],
     ];
 
@@ -37,8 +37,8 @@ class TerminalControllerTest extends TestCase
     public function testBasketsReturnCorrectValues()
     {
         foreach($this->baskets as $basket) {
-            $total = $this->terminal->scanItems($basket['products']);
-            $this->assertEquals($basket['expected'], $total);
+            $result = $this->terminal->scanItems($basket['products']);
+            $this->assertEquals($basket['expected'], $result['total']);
         }
     }
 

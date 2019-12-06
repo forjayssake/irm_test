@@ -47,7 +47,7 @@ class Router
             throw new RequestInvalidException('Route with target: ' . $target . ', is invalid');
         }
 
-        $this->routes['post'][$route] = [
+        $this->routes[Request::TYPE_POST][$route] = [
             'controller' => $controller,
             'action' => $action
         ];

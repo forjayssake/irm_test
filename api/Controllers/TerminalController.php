@@ -2,18 +2,24 @@
 
 namespace Api\Controllers;
 
+use Api\Exception\RequestInvalidException;
 use Exception;
 use Api\Services\ProductsService;
 
 class TerminalController
 {
-
-    private $basket = [];
+    /**
+     * @var array
+     */
+    private $basket;
 
     public function scanItems(array $items): array
     {
-        $this->total = 0;
+        if (empty($items['items'])) {
+            throw new RequestInvalidException('No items found. Expected format {"items":[...]}');
+        }
 
+        $this->basket = [];
         foreach($items['items'] as $item) {
 
             if (!ProductsService::productExists($item)) {

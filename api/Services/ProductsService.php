@@ -13,10 +13,10 @@ class ProductsService
      * GD | £0.15
      */
     private static $products = [
-        'ZA' => 2.00,
-        'YB' => 12.00,
         'FC' => 1.25,
-        'GD' => 0.15
+        'GD' => 0.15,
+        'YB' => 12.00,
+        'ZA' => 2.00,
     ];
 
     private static $bulkProducts = [

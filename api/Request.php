@@ -6,7 +6,7 @@ use Api\Exception\RequestInvalidException;
 
 class Request
 {
-    private const TYPE_POST = 'POST';
+    public const TYPE_POST = 'POST';
 
     public static $allowedMethods = [
         self::TYPE_POST,

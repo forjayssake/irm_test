@@ -15,6 +15,7 @@ try {
     $request = new Request($_SERVER);
     $response = $router->dispatch($request);
 } catch (RequestInvalidException $e) {
+    var_dump($e->getMessage());
     $response = ['error' => 'An exception occurred'];
 }
 
